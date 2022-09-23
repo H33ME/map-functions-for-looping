@@ -1,0 +1,36 @@
+
+### implementing a for loop for every function and spot the difference between every using forand every from purrr
+
+```{r every function using for loop}
+every<- function(x, f, ...){
+  for(i in seq_along(x)){
+    if(f(x[[i]])==TRUE){
+      print(TRUE)
+    }else{
+    print(FALSE)
+    }
+  }
+  ifelse(test=f(x)==TRUE,yes = TRUE,no = FALSE)
+}
+x<- list(1:5, letters,list(10))
+
+# calling the function
+every(x, is.character)
+
+#calling purrr::every() function
+x %>% purrr::every(is.character)
+```
+
+### creating an enhanced col_sum() that applies a summary function to every numeric column in a data frame
+
+```{r function to apply summary to numeric column in a dataframe}
+col_sum <- function(df, f){
+  is_num <- map_lgl(df, is.numeric)
+  df_num <- df[,is_num]
+  map(df_num, f)
+}
+col_sum(iris, mean)
+col_sum(iris, median)
+col_sum(iris, sd)
+col_sum(iris, summary)
+```
